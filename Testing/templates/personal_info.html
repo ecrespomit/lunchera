@@ -1,0 +1,18 @@
+{% block body %}
+  <h1>Personal Information</h1>
+  
+  <form action="" method=post>
+    <dl>
+      <dt>Name:
+      <dd><input type=text name=name value="{{
+          request.form.name }}">
+      <dt>Email:
+      <dd><input type=email name=email>
+      <dt>Phone Number:
+      <dd><input type=number name=phone_number>
+      <dt>Address:
+      <dd><input type=text name=address>
+    </dl>
+    <p><input type=submit value=Submit>
+  </form>
+{% endblock %}
