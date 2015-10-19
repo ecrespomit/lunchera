@@ -11,7 +11,8 @@ PHONE = "787-607-8914"
 ADDRESS = "28-15 34th Street, Queens NY, 11103"
 
 @app.route('/order/', methods=['POST'])
-def incoming_order(payload):
+def incoming_order():
+	payload = request.json
 	op = OrderProcessor
 	restaurant = op.get_restaurant(payload)
 	order_items = op.get_order_items(payload)
