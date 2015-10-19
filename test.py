@@ -10,7 +10,7 @@ EMAIL = "ecrespo@mit.edu"
 PHONE = "787-607-8914"
 ADDRESS = "28-15 34th Street, Queens NY, 11103"
 
-@app.route('/order/')
+@app.route('/order/', methods=['POST'])
 def incoming_order(payload):
 	op = OrderProcessor
 	restaurant = op.get_restaurant(payload)
@@ -23,7 +23,7 @@ def incoming_order(payload):
 
 @app.route('/')
 def hello_world():
-	return 'Hello World! My name is'
+	return 'Hello World! This is version 1.0'
 
 @app.route('/user/<username>')
 def show_user_profile(username):
