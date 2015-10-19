@@ -1,5 +1,6 @@
 from flask import Flask, session, request, flash, redirect, url_for
 from flask import render_template
+from order_process import OrderProcessor
 
 app = Flask(__name__)
 app.secret_key = 'testingSecretKey'
@@ -8,6 +9,17 @@ NAME = "Eric Crespo"
 EMAIL = "ecrespo@mit.edu"
 PHONE = "787-607-8914"
 ADDRESS = "28-15 34th Street, Queens NY, 11103"
+
+@app.route('/order/')
+def incoming_order(payload):
+	op = OrderProcessor
+	restaurant = op.get_restaurant(payload)
+	order_items = op.get_order_items(payload)
+	confirmation_link = op.get_confirmation_link(payload)
+	print restaurant 
+	print order_items 
+	print confirmation_link
+
 
 @app.route('/')
 def hello_world():

@@ -1,25 +1,32 @@
-import requests
+#import requests
 
+class OrderProcessor():
 
-def decide_restaurant(payload):
-	restaurant = payload['restaurant']
-	return restaurant
+	def get_restaurant(payload):
+		restaurant = payload['restaurant']
+		return restaurant
 
-def get_order_items(payload):
-	'''
-	Grab all order items and remove the empty ones
-	Empty ones will be "Ninguno", "Ninguna", "No Escogi ______".
-	'''
-	order = {}
-	order_items = payload['order_items']
-	empty_responses = ["Ninguno", "Ninguna", "No Escogi"]
-	for item in order_items:
-		if order_items[item] in empty_responses:
-			print "Not selected"
-		else:
-			order[item] = order_items[item]
-	return order
+	def get_order_items(payload):
+		'''
+		Grab all order items and remove the empty ones
+		Empty ones will be "Ninguno", "Ninguna", "No Escogi ______".
+		'''
+		order = {}
+		order_items = payload['order_items']
+		empty_responses = ["Ninguno", "Ninguna", "N/A"]
+		for item in order_items:
+			if order_items[item] not in empty_responses:
+				order[item] = order_items[item]
+		return order
 
+	def get_confirmation_link(payload):
+		'''
+		Create a confirmation link for Restaurant
+		When clicked, it will trigger email to customer
+		'''
+		order_id = payload['ID']
+		link = 'http://lunchera.co/confirm/{0}'.format(order_id)
+		return link
 
 
 # 1. decide restaurant
@@ -36,7 +43,7 @@ payload = {
 							"Item1":"Ninguno", 
 							"Item2":"Ninguna", 
 							"Item3":"Pollo a la Carbonara Pasta ($9.00)",
-							"Item4":"No Escogi Carnes",
+							"Item4":"N/A",
 							"Item5":"Carne Especial ($4)"
 							},
 			"customer_info":{
@@ -46,7 +53,7 @@ payload = {
 							"address":"Frente al parque de bombas, dejar con guardia"
 							}		
 			}
-print decide_restaurant(payload)
-order = get_order_items(payload)
-for item in order:
-	print '{0}: {1}'.format(item, order[item])
+# print decide_restaurant(payload)
+# order = get_order_items(payload)
+# for item in order:
+# 	print '{0}: {1}'.format(item, order[item])
