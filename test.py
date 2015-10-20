@@ -1,6 +1,7 @@
-from flask import Flask, session, request, flash, redirect, url_for
+from flask import Flask, session, request, flash, redirect, url_for, jsonify
 from flask import render_template
 from order_process import OrderProcessor
+import requests
 
 app = Flask(__name__)
 app.secret_key = 'testingSecretKey'
@@ -12,15 +13,37 @@ ADDRESS = "28-15 34th Street, Queens NY, 11103"
 
 @app.route('/order/', methods=['POST'])
 def incoming_order():
+	DATA = {}
+	op = OrderProcessor()
+	
+	#Get Payload
 	payload = request.get_json()
-	op = OrderProcessor
-	restaurant = op.get_restaurant(payload)
+	#Filter order items (non-null)
 	order_items = op.get_order_items(payload)
+	DATA['Order'] = order_items
+	#Get Customer info
+	customer_info = op.get_customer_info(payload)
+	DATA['Customer'] = customer_info
+	#Get Restaurant Name/ID/email
+	restaurant = op.get_restaurant(payload)
+	DATA['Restaurant'] = restaurant
+	#Get Order ID (unique)
 	confirmation_link = op.get_confirmation_link(payload)
-	print restaurant 
-	print order_items 
-	print confirmation_link
+	DATA['ID'] = confirmation_link
+	#Send all info to Restaurant
+	url = "http://requestb.in/19ur1jg1"
+	resp = requests.post(url, json=DATA)
+	
+	
+	
+	
+	return resp.text
 
+@app.route('/order-test/', methods=['POST'])
+def order_test():
+	payload = {}
+	payload = request.get_json()
+	return str(payload)
 
 @app.route('/')
 def hello_world():
@@ -29,14 +52,6 @@ def hello_world():
 @app.route('/user/<username>')
 def show_user_profile(username):
 	return "User %s" % username
-
-@app.route('/post/<int:post_id>')
-def show_post(post_id):
-	if post_id > 10:
-		return "Post %d is greater than 10" % post_id
-	else:
-		return "Post %d is lower than 10" % post_id
-
 
 @app.route('/demo/')
 def demo():
