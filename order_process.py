@@ -9,14 +9,14 @@ class OrderProcessor():
 	def get_order_items(self, payload):
 		'''
 		Grab all order items and remove the empty ones
-		Empty ones will be "Ninguno", "Ninguna", "No Escogi ______".
+		Empty ones will be "Ninguno", "Ninguna", "N/A".
 		'''
 		order = {}
 		order_items = payload['Order']
 		empty_responses = ["Ninguno", "Ninguna", "N/A"]
 		for item in order_items:
 			if order_items[item] not in empty_responses:
-				order[item] = order_items[item]
+				order[item] = order_items[item][:-1] #Remove last character ","
 		return order
 
 	def get_confirmation_link(self, payload):
