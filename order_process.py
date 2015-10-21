@@ -45,21 +45,25 @@ class OrderProcessor():
 # 7. send confirmation email (with already created payload in database)
 
 payload = {
-			"restaurant":"Demo Restaurant",
-			"order_items":{
-							"Item1":"Ninguno", 
-							"Item2":"Ninguna", 
-							"Item3":"Pollo a la Carbonara Pasta ($9.00)",
-							"Item4":"N/A",
-							"Item5":"Carne Especial ($4)"
-							},
-			"customer_info":{
-							"name":"Juan del Pueblo",
-							"email":"juan@pueblo.com",
-							"phone":"787-555-5555",
-							"address":"Frente al parque de bombas, dejar con guardia"
-							}		
-			}
+			"Customer": {
+				"Phone": "787-555-5555", 
+				"Address": "Frente al parque de bombas, se lo puedes dejas al guardia de seguridad", 
+				"Email": "juan@pueblo.com", 
+				"Name": "Juan del Pueblo"
+			}, 
+			"ID": "5989625", 
+			"Order": {
+				"Acompanantes": "Arroz Provenzal, Ensalada de Granos", 
+				"SaZon-Wiches": "Ninguno", 
+				"Plato": "Biftec Encebollado ($8.07)", 
+				"Burgers": "Ninguno", 
+				"Sopa": "Ninguna", 
+				"Ensalada": "Ninguno", 
+				"Postre": "Flan de Almendras ($3.14)"
+			}, 
+			"Restaurant": "Sazon"
+		}
+
 # print decide_restaurant(payload)
 # order = get_order_items(payload)
 # for item in order:
