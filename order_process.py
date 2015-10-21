@@ -14,9 +14,10 @@ class OrderProcessor():
 		order = {}
 		order_items = payload['Order']
 		empty_responses = ["Ninguno", "Ninguna", "N/A"]
-		for item in order_items:
-			if order_items[item] not in empty_responses:
-				order[item] = order_items[item][:-1] #Remove last character ","
+		for cattegory in order_items:
+			item = order_items[cattegory][:-1] #Remove last character ","
+			if item not in empty_responses:
+				order[cattegory] = item
 		return order
 
 	def get_confirmation_link(self, payload):
