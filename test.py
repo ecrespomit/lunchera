@@ -32,7 +32,7 @@ def incoming_order():
 	DATA['ID'] = confirmation_link
 	#Send all info to Restaurant
 	url = "http://requestb.in/19fvxns1"
-	resp = requests.post(url, headers=ID, json=DATA)
+	resp = requests.post(url, json=DATA)
 	
 	
 	
